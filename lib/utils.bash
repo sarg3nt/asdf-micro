@@ -36,16 +36,90 @@ list_all_versions() {
 	list_github_tags
 }
 
+get_platform() {
+	platform=''
+	machine=$(uname -m)
+	case "$(uname -s | tr '[:upper:]' '[:lower:]')" in
+		"linux")
+		case "$machine" in
+			"arm64"* | "aarch64"* ) platform='linux-arm64' ;;
+			"arm"* | "aarch"*) platform='linux-arm' ;;
+			*"86") platform='linux32' ;;
+			*"64") platform='linux64' ;;
+		esac
+		;;
+		"darwin") platform='osx' ;;
+		*"freebsd"*)
+		case "$machine" in
+			*"86") platform='freebsd32' ;;
+			*"64") platform='freebsd64' ;;
+		esac
+		;;
+		"openbsd")
+		case "$machine" in
+			*"86") platform='openbsd32' ;;
+			*"64") platform='openbsd64' ;;
+		esac
+		;;
+		"netbsd")
+		case "$machine" in
+			*"86") platform='netbsd32' ;;
+			*"64") platform='netbsd64' ;;
+		esac
+		;;
+		"msys"*|"cygwin"*|"mingw"*|*"_nt"*|"win"*)
+		case "$machine" in
+			*"86") platform='win32' ;;
+			*"64") platform='win64' ;;
+		esac
+		;;
+	esac
+
+	if [ "${platform:-x}" = "linux64" ]; then
+		# Detect musl libc (source: https://stackoverflow.com/a/60471114)
+		libc=$(ldd /bin/ls | grep 'musl' | head -1 | cut -d ' ' -f1)
+		if [ -n "$libc" ]; then
+			# Musl libc; use the staticly-compiled versioon
+			platform='linux64-static'
+		fi
+	fi
+
+	echo "$platform"
+}
+
+get_extension() {
+	local platform
+	platform="$1"
+	if [ "${platform:-x}" = "win64" ] || [ "${platform:-x}" = "win32" ]; then
+  		echo='zip'
+	else
+  		echo='tar.gz'
+	fi
+}
+
 download_release() {
 	local version filename url
 	version="$1"
-	filename="$2"
+	local -r platform=$(get_platform)
+	local -r extension=$(get_extension("$platform"))
 
-	# TODO: Adapt the release URL convention for micro
-	url="$GH_REPO/archive/v${version}.tar.gz"
+	#'https://github.com/zyedidia/micro/releases/download/v$version/micro-$version-$platform.$extension'
+	url="$GH_REPO/releases/download/v${version}/micro-${version}-${platform}.${extension}"
 
 	echo "* Downloading $TOOL_NAME release $version..."
-	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
+	curl "${curl_opts[@]}" -o "micro.$extension" -C - "$url" || fail "Could not download $url"
+
+	case "$extension" in
+  		"zip") unzip -j "micro.$extension" -d "micro-$TAG" ;;
+  		"tar.gz") tar -xvzf "micro.$extension" "micro-$TAG/micro" ;;
+	esac
+
+	# Debug code
+	ls -alh
+
+	mv "micro-$TAG/micro" ./micro
+	rm "micro.$extension"
+	rm -rf "micro-$TAG"
 }
 
 install_version() {
