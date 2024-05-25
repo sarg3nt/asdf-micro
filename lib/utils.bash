@@ -102,16 +102,16 @@ download_release() {
 	url="$GH_REPO/releases/download/v${version}/micro-${version}-${platform}.${extension}"
 
 	echo "* Downloading $TOOL_NAME release $version..."
-	curl "${curl_opts[@]}" -o "micro.$extension" -C - "$url" || fail "Could not download $url"
+	curl "${curl_opts[@]}" -o "$ASDF_DOWNLOAD_PATH/micro.$extension" -C - "$url" || fail "Could not download $url"
 
 	case "$extension" in
-  		"zip") unzip -j "micro.$extension" -d "micro-$version" ;;
-  		"tar.gz") tar -xvzf "micro.$extension" "micro-$version/micro" ;;
+  		"zip") unzip -j "$ASDF_DOWNLOAD_PATH/micro.$extension" -d "$ASDF_DOWNLOAD_PATH/micro-$version" ;;
+  		"tar.gz") tar -xvzf "$ASDF_DOWNLOAD_PATH/micro.$extension" "$ASDF_DOWNLOAD_PATH/micro-$version/micro" ;;
 	esac
 
-	mv "micro-$version/micro" "$filename"
-	rm "micro.$extension"
-	rm -rf "micro-$version"
+	mv "$ASDF_DOWNLOAD_PATH/micro-$version/micro" "$filename"
+	rm "$ASDF_DOWNLOAD_PATH/micro.$extension"
+	rm -rf "$ASDF_DOWNLOAD_PATH/micro-$version"
 }
 
 install_version() {
