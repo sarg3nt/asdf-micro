@@ -39,7 +39,7 @@ get_platform() {
 	case "$(uname -s | tr '[:upper:]' '[:lower:]')" in
 	"linux")
 		case "$machine" in
-		"arm64"* | "aarch64"* ) platform='linux-arm64' ;;
+		"arm64"* | "aarch64"*) platform='linux-arm64' ;;
 		"arm"* | "aarch"*) platform='linux-arm' ;;
 		*"86") platform='linux32' ;;
 		*"64") platform='linux64' ;;
@@ -64,7 +64,7 @@ get_platform() {
 		*"64") platform='netbsd64' ;;
 		esac
 		;;
-	"msys"*|"cygwin"*|"mingw"*|*"_nt"*|"win"*)
+	"msys"* | "cygwin"* | "mingw"* | *"_nt"* | "win"*)
 		case "$machine" in
 		*"86") platform='win32' ;;
 		*"64") platform='win64' ;;
@@ -85,11 +85,11 @@ get_platform() {
 }
 
 download_release() {
-	local version filename url platform extension
+	local version url platform extension
 	version="$1"
 	platform=$(get_platform)
 	if [ "${platform:-x}" = "win64" ] || [ "${platform:-x}" = "win32" ]; then
-  		extension='zip'
+ 		extension='zip'
 	else
 		extension='tar.gz'
 	fi
