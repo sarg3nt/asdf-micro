@@ -110,7 +110,7 @@ download_release() {
 	"tar.gz") tar -xvzf "$download_file" "micro-$version/micro" ;;
 	esac
 
-	echo "*** ls current directory ***"
+	echo "*** ls current directory $PWD ***"
 	ls -alh
 
 	echo "*** ls from dir base *** "
