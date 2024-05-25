@@ -90,6 +90,7 @@ get_platform() {
 download_release() {
 	local version filename url platform extension
 	version="$1"
+	filename="$2"
 	platform=$(get_platform)
 	if [ "${platform:-x}" = "win64" ] || [ "${platform:-x}" = "win32" ]; then
   		extension='zip'
@@ -114,7 +115,7 @@ download_release() {
 	# Debug code
 	ls -alh
 
-	mv "micro-$version/micro" ./micro
+	mv "micro-$version/micro" "$filename"
 	rm "micro.$extension"
 	rm -rf "micro-$version"
 }
