@@ -97,20 +97,29 @@ download_release() {
 
 	echo "Platform: $platform"
 	echo "Extension: $extension"
+	local download_file="$ASDF_DOWNLOAD_PATH/micro.$extension"
 
 	#'https://github.com/zyedidia/micro/releases/download/v$version/micro-$version-$platform.$extension'
 	url="$GH_REPO/releases/download/v${version}/micro-${version}-${platform}.${extension}"
 
 	echo "* Downloading $TOOL_NAME release $version..."
-	curl "${curl_opts[@]}" -o "$ASDF_DOWNLOAD_PATH/micro.$extension" -C - "$url" || fail "Could not download $url"
-
+	curl "${curl_opts[@]}" -o "$download_file" -C - "$url" || fail "Could not download $url"
+	
+	echo "*** download path file contents ***"
+	ls -alh "$ASDF_DOWNLOAD_PATH"
+	echo "*** Download file var is ***"
+	echo "$download_file"
+	tar -tvf "$download_file"
+	
 	case "$extension" in
-  		"zip") unzip -j "$ASDF_DOWNLOAD_PATH/micro.$extension" -d "$ASDF_DOWNLOAD_PATH/micro-$version" ;;
-  		"tar.gz") tar -xvzf "$ASDF_DOWNLOAD_PATH/micro.$extension" "$ASDF_DOWNLOAD_PATH/micro-$version/micro" ;;
+  		"zip") unzip -j "$download_file" -d "$ASDF_DOWNLOAD_PATH/micro-$version" ;;
+  		"tar.gz") tar -xvzf "$download_file" "$ASDF_DOWNLOAD_PATH/micro-$version/micro" ;;
 	esac
 
+	# tar: /tmp/asdf.i3W6/downloads/micro/2.0.13/micro-2.0.13/micro: Not found in archive
+
 	mv "$ASDF_DOWNLOAD_PATH/micro-$version/micro" "$filename"
-	rm "$ASDF_DOWNLOAD_PATH/micro.$extension"
+	rm "$download_file"
 	rm -rf "$ASDF_DOWNLOAD_PATH/micro-$version"
 }
 
