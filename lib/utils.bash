@@ -105,13 +105,6 @@ download_release() {
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$download_file" -C - "$url" || fail "Could not download $url"
 	
-	echo "*** Curl command ***"
-	echo "${curl_opts[@]} -o $download_file -C - $url"
-	echo "*** download path file contents ***"
-	ls -alh "$ASDF_DOWNLOAD_PATH"
-	echo "*** Download file var is ***"
-	echo "$download_file"
-	tar -tvf "$download_file"
 
 	curl -fsSL -o /tmp/asdf.kB3Z/downloads/micro/2.0.13/micro.tar.gz -C - https://github.com/zyedidia/micro/releases/download/v2.0.13/micro-2.0.13-linux64.tar.gz
 
@@ -121,6 +114,10 @@ download_release() {
 	esac
 
 	mv "$ASDF_DOWNLOAD_PATH/micro-$version/micro" "$filename"
+
+	echo "*** Destination file ***"
+	ls -alh "$filename"
+
 	rm "$download_file"
 	rm -rf "$ASDF_DOWNLOAD_PATH/micro-$version"
 }
