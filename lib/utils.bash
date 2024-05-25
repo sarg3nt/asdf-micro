@@ -99,7 +99,6 @@ download_release() {
 	echo "Extension: $extension"
 	local download_file="$ASDF_DOWNLOAD_PATH/micro.$extension"
 
-	#'https://github.com/zyedidia/micro/releases/download/v$version/micro-$version-$platform.$extension'
 	url="$GH_REPO/releases/download/v${version}/micro-${version}-${platform}.${extension}"
 
 	echo "* Downloading $TOOL_NAME release $version..."
@@ -110,19 +109,16 @@ download_release() {
 	"tar.gz") tar -xvzf "$download_file" -C "$ASDF_DOWNLOAD_PATH/" --strip-components=1 "micro-$version/micro" ;;
 	esac
 
-	# Move and rename micro up a directory to micro-version
-	ls -alh "$ASDF_DOWNLOAD_PATH"
-	#echo "From: $ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version/${TOOL_NAME} --- To: $ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version"
-	#mv "$ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version/${TOOL_NAME}" "$ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version"
 	rm "$download_file"
 	echo "* Downlaod complte"
-	#rm -rf "$ASDF_DOWNLOAD_PATH/micro-$version"
 }
 
 install_version() {
 	local install_type="$1"
 	local version="$2"
 	local install_path="${3%/bin}/bin"
+
+	echo "* Beginning install"
 
 	if [ "$install_type" != "version" ]; then
 		fail "asdf-$TOOL_NAME supports release installs only"
@@ -132,13 +128,11 @@ install_version() {
 		mkdir -p "$install_path"
 		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
 
-		mv "$install_path/${TOOL_NAME}-${version}" "$install_path/${TOOL_NAME}"
-
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
 		test -x "$install_path/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
 
-		echo "$TOOL_NAME $version installation was successful!"
+		echo "* $TOOL_NAME $version installation was successful!"
 	) || (
 		rm -rf "$install_path"
 		fail "An error occurred while installing $TOOL_NAME $version."

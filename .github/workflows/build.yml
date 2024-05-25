@@ -15,8 +15,8 @@ jobs:
         os:
           # See: https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#standard-github-hosted-runners-for-public-repositories
           - ubuntu-latest
-          #- macos-12 # Intel
-          #- macos-latest # M series
+          - macos-12 # Intel
+          - macos-latest # M series
           # - windows-latest # broken
     runs-on: ${{ matrix.os }}
     steps:
