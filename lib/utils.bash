@@ -106,7 +106,7 @@ download_release() {
 	curl "${curl_opts[@]}" -o "$download_file" -C - "$url" || fail "Could not download $url"
 	
 	echo "*** Curl command ***"
-	echo "$curl"
+	echo "${curl_opts[@]} -o $download_file -C - $url"
 	echo "*** download path file contents ***"
 	ls -alh "$ASDF_DOWNLOAD_PATH"
 	echo "*** Download file var is ***"
