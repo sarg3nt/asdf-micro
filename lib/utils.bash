@@ -112,15 +112,7 @@ download_release() {
   		"tar.gz") tar -xvzf "micro.$extension" "micro-$version/micro" ;;
 	esac
 
-	# Debug code
-	ls -alh
-	ls -alh "micro-$version"
-
 	mv "micro-$version/micro" "$filename"
-	echo ""
-	echo "ls filename"
-	ls -alh "$filename"
-
 	rm "micro.$extension"
 	rm -rf "micro-$version"
 }
@@ -139,10 +131,6 @@ install_version() {
 		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
 		mv "$install_path/${TOOL_NAME}-${version}" "$install_path/${TOOL_NAME}"
 
-		# /tmp/asdf.tbmd/downloads/micro/2.0.13/micro-2.0.13
-		# /tmp/asdf.tbmd/installs/micro/2.0.13/bin/micro to be executable.
-
-		# TODO: Assert micro executable exists.
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
 		test -x "$install_path/$tool_cmd" || fail "Expected $install_path/$tool_cmd to be executable."
