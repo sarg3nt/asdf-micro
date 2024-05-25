@@ -115,12 +115,13 @@ download_release() {
 	echo "*** ls from dir base *** "
 	ls -alh "$ASDF_DOWNLOAD_PATH"
 
-	mv "$ASDF_DOWNLOAD_PATH/micro" "$filename"
+	mv "$ASDF_DOWNLOAD_PATH/micro-$version/micro" "$filename"
 
 	echo "*** Destination file ***"
 	ls -alh "$filename"
 
 	rm "$download_file"
+	rm -rf "$ASDF_DOWNLOAD_PATH/micro-$version"
 }
 
 install_version() {
