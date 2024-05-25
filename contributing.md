@@ -3,9 +3,8 @@
 Testing Locally:
 
 ```shell
-asdf plugin test <plugin-name> <plugin-url> [--asdf-tool-version <version>] [--asdf-plugin-gitref <git-ref>] [test-command*]
+asdf plugin test micro https://github.com/sarg3nt/asdf-micro.git --asdf-tool-version 2.0.13 "micro --version"
 
-# TODO: adapt this
 asdf plugin test micro https://github.com/sarg3nt/asdf-micro.git "micro --version"
 ```
 

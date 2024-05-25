@@ -101,7 +101,7 @@ download_release() {
 	local version filename url
 	version="$1"
 	local -r platform=$(get_platform)
-	local -r extension=$(get_extension("$platform"))
+	local -r extension=$(get_extension "$platform")
 
 	#'https://github.com/zyedidia/micro/releases/download/v$version/micro-$version-$platform.$extension'
 	url="$GH_REPO/releases/download/v${version}/micro-${version}-${platform}.${extension}"
