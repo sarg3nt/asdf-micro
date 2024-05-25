@@ -87,21 +87,18 @@ get_platform() {
 	echo "$platform"
 }
 
-get_extension() {
-	local platform
-	platform="$1"
-	if [ "${platform:-x}" = "win64" ] || [ "${platform:-x}" = "win32" ]; then
-  		echo='zip'
-	else
-  		echo='tar.gz'
-	fi
-}
-
 download_release() {
-	local version filename url
+	local version filename url platform extension
 	version="$1"
-	local -r platform=$(get_platform)
-	local -r extension=$(get_extension "$platform")
+	platform=$(get_platform)
+	if [ "${platform:-x}" = "win64" ] || [ "${platform:-x}" = "win32" ]; then
+  		extension='zip'
+	else
+  		extension='tar.gz'
+	fi
+
+	echo "Platform: $platform"
+	echo "Extension: $extension"
 
 	#'https://github.com/zyedidia/micro/releases/download/v$version/micro-$version-$platform.$extension'
 	url="$GH_REPO/releases/download/v${version}/micro-${version}-${platform}.${extension}"
