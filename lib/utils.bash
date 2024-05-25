@@ -117,8 +117,10 @@ download_release() {
 	ls -alh "micro-$version"
 
 	mv "micro-$version/micro" "$filename"
+	echo ""
+	echo "ls filename"
 	ls -alh "$filename"
-	
+
 	rm "micro.$extension"
 	rm -rf "micro-$version"
 }
@@ -135,6 +137,10 @@ install_version() {
 	(
 		mkdir -p "$install_path"
 		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
+		mv "$install_path/${TOOL_NAME}-${version}" "$install_path/${TOOL_NAME}"
+
+		# /tmp/asdf.tbmd/downloads/micro/2.0.13/micro-2.0.13
+		# /tmp/asdf.tbmd/installs/micro/2.0.13/bin/micro to be executable.
 
 		# TODO: Assert micro executable exists.
 		local tool_cmd
