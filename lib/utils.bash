@@ -141,7 +141,7 @@ install_version() {
 		ls -alh "$install_path"
 		ls -alh "$install_path/${TOOL_NAME}-${version}"
 
-		mv "$install_path/${TOOL_NAME}-${version}" "$install_path/${TOOL_NAME}"
+		mv "$install_path/${TOOL_NAME}-${version}/${TOOL_NAME}" "$install_path/${TOOL_NAME}"
 
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
