@@ -110,6 +110,14 @@ download_release() {
 	"tar.gz") tar -xvzf "$download_file" "micro-$version/micro" ;;
 	esac
 
+	echo "*** ls current directory ***"
+	ls -alh
+
+	echo "*** ls from dir base *** "
+	ls -alh "$ASDF_DOWNLOAD_PATH"
+	echo "*** ls from dir full *** "
+	ls -alh "$ASDF_DOWNLOAD_PATH/micro-$version"
+
 	mv "$ASDF_DOWNLOAD_PATH/micro-$version/micro" "$filename"
 
 	echo "*** Destination file ***"
