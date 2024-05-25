@@ -107,12 +107,13 @@ download_release() {
 
 	case "$extension" in
  	"zip") unzip -j "$download_file" -d "$ASDF_DOWNLOAD_PATH/" ;;
-	"tar.gz") tar -xvzf "$download_file" -C "$ASDF_DOWNLOAD_PATH/" "micro-$version/micro" ;;
+	"tar.gz") tar -xvzf "$download_file" -C "$ASDF_DOWNLOAD_PATH/" --strip-components=1 "micro-$version/micro" ;;
 	esac
 
 	# Move and rename micro up a directory to micro-version
-	echo "From: $ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version/${TOOL_NAME} --- To: $ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version"
-	mv "$ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version/${TOOL_NAME}" "$ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version"
+	ls -alh "$ASDF_DOWNLOAD_PATH"
+	#echo "From: $ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version/${TOOL_NAME} --- To: $ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version"
+	#mv "$ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version/${TOOL_NAME}" "$ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version"
 	rm "$download_file"
 	echo "* Downlaod complte"
 	#rm -rf "$ASDF_DOWNLOAD_PATH/micro-$version"
