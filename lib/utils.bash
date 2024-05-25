@@ -106,12 +106,9 @@ download_release() {
 	curl "${curl_opts[@]}" -o "$download_file" -C - "$url" || fail "Could not download $url"
 
 	case "$extension" in
- 	"zip") unzip -j "$download_file" -d "micro-$version" ;;
-	"tar.gz") tar -xvzf "$download_file" "micro-$version/micro" ;;
+ 	"zip") unzip -j "$download_file" -d "$ASDF_DOWNLOAD_PATH/micro-$version" ;;
+	"tar.gz") tar -xvzf "$download_file" -C "$ASDF_DOWNLOAD_PATH/micro-$version" "micro-$version/micro" ;;
 	esac
-
-	echo "*** ls current directory $PWD ***"
-	ls -alh
 
 	echo "*** ls from dir base *** "
 	ls -alh "$ASDF_DOWNLOAD_PATH"
