@@ -89,11 +89,11 @@ download_release() {
 	version="$1"
 	platform=$(get_platform)
 
-  	if [ "${platform:-x}" = "win64" ] || [ "${platform:-x}" = "win32" ]; then
+	if [ "${platform:-x}" = "win64" ] || [ "${platform:-x}" = "win32" ]; then
 		extension='zip'
- 	else
- 		extension='tar.gz'
- 	fi
+	else
+		extension='tar.gz'
+	fi
 
 	echo "Platform: $platform"
 	echo "Extension: $extension"
