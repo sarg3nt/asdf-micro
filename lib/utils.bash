@@ -111,8 +111,10 @@ download_release() {
 	esac
 
 	# Move and rename micro up a directory to micro-version
+	echo "From: $ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version/${TOOL_NAME} --- To: $ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version"
 	mv "$ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version/${TOOL_NAME}" "$ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version"
 	rm "$download_file"
+	echo "* Downlaod complte"
 	#rm -rf "$ASDF_DOWNLOAD_PATH/micro-$version"
 }
 
