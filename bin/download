@@ -13,4 +13,4 @@ mkdir -p "$ASDF_DOWNLOAD_PATH"
 release_file="$ASDF_DOWNLOAD_PATH/$TOOL_NAME-$ASDF_INSTALL_VERSION"
 
 # Download tar.gz file to the download directory
-download_release "$ASDF_INSTALL_VERSION" "$release_file"
+download_release "$ASDF_INSTALL_VERSION"

@@ -37,37 +37,37 @@ get_platform() {
 	platform=''
 	machine=$(uname -m)
 	case "$(uname -s | tr '[:upper:]' '[:lower:]')" in
-		"linux")
+	"linux")
 		case "$machine" in
-			"arm64"* | "aarch64"* ) platform='linux-arm64' ;;
-			"arm"* | "aarch"*) platform='linux-arm' ;;
-			*"86") platform='linux32' ;;
-			*"64") platform='linux64' ;;
+		"arm64"* | "aarch64"* ) platform='linux-arm64' ;;
+		"arm"* | "aarch"*) platform='linux-arm' ;;
+		*"86") platform='linux32' ;;
+		*"64") platform='linux64' ;;
 		esac
 		;;
-		"darwin") platform='osx' ;;
-		*"freebsd"*)
+	"darwin") platform='osx' ;;
+	*"freebsd"*)
 		case "$machine" in
-			*"86") platform='freebsd32' ;;
-			*"64") platform='freebsd64' ;;
+		*"86") platform='freebsd32' ;;
+		*"64") platform='freebsd64' ;;
 		esac
 		;;
-		"openbsd")
+	"openbsd")
 		case "$machine" in
-			*"86") platform='openbsd32' ;;
-			*"64") platform='openbsd64' ;;
+		*"86") platform='openbsd32' ;;
+		*"64") platform='openbsd64' ;;
 		esac
 		;;
-		"netbsd")
+	"netbsd")
 		case "$machine" in
-			*"86") platform='netbsd32' ;;
-			*"64") platform='netbsd64' ;;
+		*"86") platform='netbsd32' ;;
+		*"64") platform='netbsd64' ;;
 		esac
 		;;
-		"msys"*|"cygwin"*|"mingw"*|*"_nt"*|"win"*)
+	"msys"*|"cygwin"*|"mingw"*|*"_nt"*|"win"*)
 		case "$machine" in
-			*"86") platform='win32' ;;
-			*"64") platform='win64' ;;
+		*"86") platform='win32' ;;
+		*"64") platform='win64' ;;
 		esac
 		;;
 	esac
@@ -87,12 +87,11 @@ get_platform() {
 download_release() {
 	local version filename url platform extension
 	version="$1"
-	filename="$2"
 	platform=$(get_platform)
 	if [ "${platform:-x}" = "win64" ] || [ "${platform:-x}" = "win32" ]; then
   		extension='zip'
 	else
-  		extension='tar.gz'
+		extension='tar.gz'
 	fi
 
 	echo "Platform: $platform"
@@ -105,12 +104,12 @@ download_release() {
 	curl "${curl_opts[@]}" -o "$download_file" -C - "$url" || fail "Could not download $url"
 
 	case "$extension" in
- 	"zip") unzip -j "$download_file" -d "$ASDF_DOWNLOAD_PATH/" ;;
+	"zip") unzip -j "$download_file" -d "$ASDF_DOWNLOAD_PATH/" ;;
 	"tar.gz") tar -xvzf "$download_file" -C "$ASDF_DOWNLOAD_PATH/" --strip-components=1 "micro-$version/micro" ;;
 	esac
 
 	rm "$download_file"
-	echo "* Downlaod complte"
+	echo "* Downlaod complete"
 }
 
 install_version() {
