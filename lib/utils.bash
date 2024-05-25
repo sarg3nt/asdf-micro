@@ -105,12 +105,14 @@ download_release() {
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$download_file" -C - "$url" || fail "Could not download $url"
 	
+	echo "*** Curl command ***"
+	echo "$curl"
 	echo "*** download path file contents ***"
 	ls -alh "$ASDF_DOWNLOAD_PATH"
 	echo "*** Download file var is ***"
 	echo "$download_file"
 	tar -tvf "$download_file"
-	
+
 	case "$extension" in
   		"zip") unzip -j "$download_file" -d "$ASDF_DOWNLOAD_PATH/micro-$version" ;;
   		"tar.gz") tar -xvzf "$download_file" "$ASDF_DOWNLOAD_PATH/micro-$version/micro" ;;
