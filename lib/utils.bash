@@ -112,8 +112,7 @@ download_release() {
 
 	# tar: /tmp/asdf.bhqi/downloads/micro/2.0.13/micro-2.0.13: Cannot open: No such file or directory
 
-	echo "*** ls from dir base *** "
-	ls -alh "$ASDF_DOWNLOAD_PATH"
+
 
 	#mv "$ASDF_DOWNLOAD_PATH/micro-$version/micro" "$filename"
 
@@ -137,6 +136,11 @@ install_version() {
 	(
 		mkdir -p "$install_path"
 		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
+	
+		echo "*** ls install path $install_path *** "
+		ls -alh "$install_path"
+		ls -alh "$install_path/${TOOL_NAME}-${version}"
+
 		mv "$install_path/${TOOL_NAME}-${version}" "$install_path/${TOOL_NAME}"
 
 		local tool_cmd
