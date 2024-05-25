@@ -106,22 +106,21 @@ download_release() {
 	curl "${curl_opts[@]}" -o "$download_file" -C - "$url" || fail "Could not download $url"
 
 	case "$extension" in
- 	"zip") unzip -j "$download_file" -d "$ASDF_DOWNLOAD_PATH/micro-$version" ;;
-	"tar.gz") tar -xvzf "$download_file" -C "$ASDF_DOWNLOAD_PATH/micro-$version" "micro-$version/micro" ;;
+ 	"zip") unzip -j "$download_file" -d "$ASDF_DOWNLOAD_PATH/" ;;
+	"tar.gz") tar -xvzf "$download_file" -C "$ASDF_DOWNLOAD_PATH/" "micro-$version/micro" ;;
 	esac
+
+	# tar: /tmp/asdf.bhqi/downloads/micro/2.0.13/micro-2.0.13: Cannot open: No such file or directory
 
 	echo "*** ls from dir base *** "
 	ls -alh "$ASDF_DOWNLOAD_PATH"
-	echo "*** ls from dir full *** "
-	ls -alh "$ASDF_DOWNLOAD_PATH/micro-$version"
 
-	mv "$ASDF_DOWNLOAD_PATH/micro-$version/micro" "$filename"
+	mv "$ASDF_DOWNLOAD_PATH/micro" "$filename"
 
 	echo "*** Destination file ***"
 	ls -alh "$filename"
 
 	rm "$download_file"
-	rm -rf "$ASDF_DOWNLOAD_PATH/micro-$version"
 }
 
 install_version() {
