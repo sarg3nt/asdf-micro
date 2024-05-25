@@ -114,8 +114,11 @@ download_release() {
 
 	# Debug code
 	ls -alh
+	ls -alh "micro-$version"
 
 	mv "micro-$version/micro" "$filename"
+	ls -alh "$filename"
+	
 	rm "micro.$extension"
 	rm -rf "micro-$version"
 }
