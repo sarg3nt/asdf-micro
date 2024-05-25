@@ -113,12 +113,12 @@ download_release() {
 	echo "$download_file"
 	tar -tvf "$download_file"
 
-	case "$extension" in
-  		"zip") unzip -j "$download_file" -d "$ASDF_DOWNLOAD_PATH/micro-$version" ;;
-  		"tar.gz") tar -xvzf "$download_file" "$ASDF_DOWNLOAD_PATH/micro-$version/micro" ;;
-	esac
+	curl -fsSL -o /tmp/asdf.kB3Z/downloads/micro/2.0.13/micro.tar.gz -C - https://github.com/zyedidia/micro/releases/download/v2.0.13/micro-2.0.13-linux64.tar.gz
 
-	# tar: /tmp/asdf.i3W6/downloads/micro/2.0.13/micro-2.0.13/micro: Not found in archive
+	case "$extension" in
+  		"zip") unzip -j "$download_file" -d "micro-$version" ;;
+  		"tar.gz") tar -xvzf "$download_file" "micro-$version/micro" ;;
+	esac
 
 	mv "$ASDF_DOWNLOAD_PATH/micro-$version/micro" "$filename"
 	rm "$download_file"
