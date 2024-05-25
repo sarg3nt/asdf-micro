@@ -107,16 +107,16 @@ download_release() {
 	curl "${curl_opts[@]}" -o "micro.$extension" -C - "$url" || fail "Could not download $url"
 
 	case "$extension" in
-  		"zip") unzip -j "micro.$extension" -d "micro-$TAG" ;;
-  		"tar.gz") tar -xvzf "micro.$extension" "micro-$TAG/micro" ;;
+  		"zip") unzip -j "micro.$extension" -d "micro-$version" ;;
+  		"tar.gz") tar -xvzf "micro.$extension" "micro-$version/micro" ;;
 	esac
 
 	# Debug code
 	ls -alh
 
-	mv "micro-$TAG/micro" ./micro
+	mv "micro-$version/micro" ./micro
 	rm "micro.$extension"
-	rm -rf "micro-$TAG"
+	rm -rf "micro-$version"
 }
 
 install_version() {
