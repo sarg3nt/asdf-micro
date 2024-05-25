@@ -110,16 +110,8 @@ download_release() {
 	"tar.gz") tar -xvzf "$download_file" -C "$ASDF_DOWNLOAD_PATH/" "micro-$version/micro" ;;
 	esac
 
-	# tar: /tmp/asdf.bhqi/downloads/micro/2.0.13/micro-2.0.13: Cannot open: No such file or directory
-
-
-
-	#mv "$ASDF_DOWNLOAD_PATH/micro-$version/micro" "$filename"
-
-	#echo "*** Destination file ***"
-	
-	#ls -alh "$filename"
-
+	# Move and rename micro up a directory to micro-version
+	mv "$ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version/${TOOL_NAME}" "$ASDF_DOWNLOAD_PATH/${TOOL_NAME}-$version"
 	rm "$download_file"
 	#rm -rf "$ASDF_DOWNLOAD_PATH/micro-$version"
 }
@@ -136,12 +128,8 @@ install_version() {
 	(
 		mkdir -p "$install_path"
 		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
-	
-		echo "*** ls install path $install_path *** "
-		ls -alh "$install_path"
-		ls -alh "$install_path/${TOOL_NAME}-${version}"
 
-		mv "$install_path/${TOOL_NAME}-${version}/${TOOL_NAME}" "$install_path/${TOOL_NAME}"
+		mv "$install_path/${TOOL_NAME}-${version}" "$install_path/${TOOL_NAME}"
 
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
